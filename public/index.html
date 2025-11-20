@@ -1,0 +1,460 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-LAKBAY | Augmented Reality Tourism</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #8B0000 0%, #5C0000 100%);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            transform: translateY(-2px);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 6rem 2rem 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #elakbay {
+            background: linear-gradient(135deg, #8B0000 0%, #5C0000 100%);
+            color: white;
+            text-align: center;
+        }
+
+        #elakbay h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        #elakbay .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        #elakbay p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        #public-bath {
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+        }
+
+        #public-bath h2 {
+            font-size: 3rem;
+            color: #8B0000;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        #public-bath .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        #public-bath .image-container img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        #public-bath .text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        #about {
+            background: white;
+        }
+
+        #about h2 {
+            font-size: 3rem;
+            color: #8B0000;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        #about .content {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        #about p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: #444;
+            margin-bottom: 1.5rem;
+        }
+
+        #ar-experience {
+            background: linear-gradient(135deg, #5C0000 0%, #8B0000 100%);
+            color: white;
+            text-align: center;
+        }
+
+        #ar-experience h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        #ar-experience p {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+        }
+
+        .experience-button-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            display: inline-block;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .ar-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #8B0000 0%, #5C0000 100%);
+            color: white;
+            padding: 1.5rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.3rem;
+            box-shadow: 0 10px 30px rgba(139, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .ar-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(139, 0, 0, 0.6);
+        }
+
+        .ar-instructions {
+            margin-top: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .ar-instructions p {
+            margin: 0.5rem 0;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0.8rem 1rem;
+            }
+
+            nav ul {
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav a {
+                font-size: 0.85rem;
+                padding: 0.3rem 0.5rem;
+            }
+
+            section {
+                padding: 5rem 1.5rem 3rem;
+                min-height: auto;
+            }
+
+            #elakbay h1 {
+                font-size: 2.5rem;
+            }
+
+            #elakbay .subtitle {
+                font-size: 1.2rem;
+            }
+
+            #elakbay p {
+                font-size: 1rem;
+            }
+
+            #public-bath .content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            #public-bath .image-container img {
+                height: 250px;
+            }
+
+            #public-bath .text p {
+                font-size: 1rem;
+            }
+
+            #about p {
+                font-size: 1rem;
+            }
+
+            h2 {
+                font-size: 2rem !important;
+            }
+
+            .experience-button-container {
+                padding: 2rem;
+            }
+
+            .ar-button {
+                padding: 1.2rem 2rem;
+                font-size: 1.1rem;
+            }
+
+            #ar-experience p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav a {
+                font-size: 0.75rem;
+            }
+
+            #elakbay h1 {
+                font-size: 2rem;
+            }
+
+            #elakbay .subtitle {
+                font-size: 1rem;
+            }
+
+            h2 {
+                font-size: 1.8rem !important;
+            }
+
+            .experience-button-container {
+                padding: 1.5rem;
+            }
+
+            .ar-button {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#elakbay">E-LAKBAY</a></li>
+            <li><a href="#public-bath">PUBLIC BATH</a></li>
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#ar-experience">AR EXPERIENCE</a></li>
+        </ul>
+    </nav>
+
+    <section id="elakbay">
+        <div class="container">
+            <h1>E-LAKBAY</h1>
+            <p class="subtitle">Augmented Reality Tourism Experience</p>
+            <p>
+                Welcome to E-LAKBAY, an innovative augmented reality platform that brings Philippine heritage sites to life. 
+                Experience the rich cultural landmarks of Mauban, Quezon through immersive AR technology. 
+                Explore historical sites, learn fascinating stories, and discover hidden gems—all through your mobile device. 
+                E-LAKBAY bridges the gap between past and present, making cultural tourism more engaging and accessible for everyone.
+            </p>
+        </div>
+    </section>
+
+    <section id="public-bath">
+        <div class="container">
+            <h2>PUBLIC BATH IN MAUBAN</h2>
+            <div class="content">
+                <div class="image-container">
+                    <img src="https://httpvisitquezontourist.wordpress.com/wp-content/uploads/2017/02/1725-public-bath.jpg" alt="Historic Public Bath in Mauban">
+                </div>
+                <div class="text">
+                    <p>
+                        The historic public bath in Mauban, Quezon is a remarkable testament to the town's rich colonial heritage. 
+                        Built during the Spanish colonial period, this architectural gem served as a communal bathing facility 
+                        where locals gathered not only for hygiene but also for social interaction.
+                    </p>
+                    <p>
+                        The structure features traditional Spanish colonial design elements, including coral stone walls and 
+                        intricate water distribution systems that showcase the engineering ingenuity of the era. Today, it stands 
+                        as one of Mauban's most significant cultural landmarks, offering visitors a glimpse into the daily life 
+                        and social customs of Filipinos during the colonial period.
+                    </p>
+                    <p>
+                        Through E-LAKBAY's AR technology, you can now explore this historic site in unprecedented detail, 
+                        viewing reconstructed scenes and learning about its fascinating history interactively.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2>ABOUT THE PROJECT</h2>
+            <div class="content">
+                <p>
+                    E-LAKBAY was developed by a dedicated team of researchers and developers passionate about preserving 
+                    and promoting Philippine cultural heritage through innovative technology. In order to promote tourism in 
+                    Mauban, Quezon, and raise awareness about its rich historical significance, we created this augmented 
+                    reality platform that allows users to experience heritage sites in an immersive and interactive way. 
+                    By leveraging cutting-edge AR technology, we aim to attract more visitors, educate the younger generation 
+                    about their cultural roots, and contribute to the preservation of these invaluable historical landmarks 
+                    while creating sustainable opportunities for local communities.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="ar-experience">
+        <div class="container">
+            <h2>AR EXPERIENCE</h2>
+            <p>
+                Click the button below to launch the augmented reality experience 
+                and explore the Public Bath in Mauban like never before!
+            </p>
+            <div class="experience-button-container">
+                <a href="ar.html" class="ar-button">
+                    🎯 Launch AR Experience
+                </a>
+            </div>
+            <div class="ar-instructions">
+                <p>✨ Experience history in augmented reality</p>
+                <p>📱 Best viewed on mobile devices</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
